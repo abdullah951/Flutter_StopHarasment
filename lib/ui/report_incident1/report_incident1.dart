@@ -1,72 +1,104 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/strings.dart';
+import 'package:flutter_app/constants/dimens.dart' ;
+import 'package:flutter_app/widgets/app_bar.dart';
+import 'package:flutter_app/widgets/button_submit.dart';
+import 'package:flutter_app/widgets/text_field.dart';
+import 'package:flutter_app/widgets/text_field_inactive.dart';
+import 'package:flutter_app/widgets/text_field_large.dart';
+import 'package:flutter_app/widgets/text_title.dart';
 
 class ReportIncidentScreen1 extends StatefulWidget {
+
   @override
   _ReportIncidentScreen1State createState() => _ReportIncidentScreen1State();
 }
 
 class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
+  final myController = TextEditingController();
+  final AddressController = TextEditingController();
+  final CommentController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colorss.blue_background,
-        centerTitle: true,
-        title: new Text(Strings.appBar1, style: TextStyle(color: Colorss.white),),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colorss.white,
-            semanticLabel: 'back',
-          ),
-          onPressed: () {
-            print('Back Pressed');
-          },
-        ),
-      ),
-      body: Container(
-        margin: EdgeInsets.only(left: 20, top: 20, right: 0, bottom: 0),
-        child: Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Icon(Icons.camera_alt, color: Colorss.blue_background,),
-                SizedBox(width: 10,),
-                Text(Strings.picture_of_the_incident, style: TextStyle(color: Colorss.blue_background),)
-              ],
-            ),
-            Container(
+      appBar: MyAppBar().setAppBar(context, Strings.appBar1),
+      body: ListView(
 
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: SizedBox(
-                    width: 20,
-                    height: 100.0,
-                    child: new ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        return _circularImageWidget();
-                      },
+        children: <Widget>[
+
+
+        Container(
+          margin: EdgeInsets.symmetric(vertical: Dimens.vertical_margin,horizontal: Dimens.horizontal_padding),
+          child: Column(
+            children: <Widget>[
+              MyTextTitle().setTextInput(context, CupertinoIcons.photo_camera_solid, Strings.picture_of_the_incident),
+              SizedBox(height: Dimens.vertical_padding,),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: SizedBox(
+                      width: 20,
+                      height: 100.0,
+                      child: new ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 5,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return _circularImageWidget();
+                        },
+                      ),
                     ),
                   ),
-                ),
-                _circularImageWidget()
-              ],
-            ),
-            Row(
-              children: <Widget>[
+                  _circularImageWidget()
+                ],
+              ),
+              SizedBox(height: Dimens.vertical_margin,),
+              MyTextTitle().setTextInput(context, CupertinoIcons.location_solid, Strings.address),
+              SizedBox(height: Dimens.vertical_padding,),
+              Row(
+               children: <Widget>[
+                 Expanded(
 
-              ],
-            )
-          ],
+
+                  child : MyTextField().setTextField(context, myController),
+                   flex: 4,
+                 ),
+                 SizedBox(width: Dimens.vertical_padding_small,),
+
+                 Expanded(
+
+
+                   child : MyTextField().setTextField(context, myController),
+                   flex: 1,
+                 ),
+               ],
+              ),
+              SizedBox(height: Dimens.vertical_padding,),
+              MyTextFieldInActive().setTextField(context, myController),
+              SizedBox(height: Dimens.vertical_padding,),
+              MySubmitButton().setButton(context, 'Map'),
+
+
+
+              SizedBox(height: Dimens.vertical_margin,),
+              MyTextTitle().setTextInput(context, Icons.assignment_late, Strings.incident_type),
+              SizedBox(height: Dimens.vertical_padding,),
+              MyTextField().setTextField(context, myController),
+
+              SizedBox(height: Dimens.vertical_margin,),
+              MyTextTitle().setTextInput(context, Icons.mode_comment, Strings.picture_of_the_incident),
+              SizedBox(height: Dimens.vertical_padding,),
+              MyTextFieldLarge().setTextField(context, myController),
+              SizedBox(height: Dimens.vertical_padding,),
+              MySubmitButton().setButton(context, 'Submit'),
+
+            ],
+          ),
         ),
+        ],
       )
     );
   }
@@ -89,4 +121,8 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
     );
   }
 
+
+  onSubmit() {
+    print(myController.text);
+  }
 }
