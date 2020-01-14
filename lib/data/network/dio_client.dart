@@ -1,0 +1,6 @@
+
+
+class DioClient {
+  // dio instance
+
+}
