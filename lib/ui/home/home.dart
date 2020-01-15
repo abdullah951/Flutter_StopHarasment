@@ -3,6 +3,7 @@ import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
+import 'package:flutter_app/widgets/button_submit.dart';
 import '../../routes.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,38 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 new Container(
                   margin: EdgeInsets.only(top: 20),
-                  child:  RaisedButton(
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(12.0),
-                            side: BorderSide(color: Colorss.white_txt)),
-                        color: Colorss.blue_background,
-                        textColor: Colors.red,
-                        padding: EdgeInsets.only(left: 30, right: 40, bottom: 15, top: 15),
-                        onPressed: () {
-                          Navigator.pushNamed(context, Routes.report_incident1);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(right: 40, left: 0),
-                              child: Icon(Icons.camera_alt, color: Colorss.white,),
-                            )
-                            ,
-                            Padding(
-                              padding: EdgeInsets.only(right: 40, left: 0),
-                              child: Text(
-                                "Report An Incident".toUpperCase(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17.0,
-                                ),
-                              ),
-                            ),
+                    child:  MySubmitButton().setButton(context, 'Report incident ',onSubmit),
 
-                          ],
-                        )
-                    )
+
+
+
+
                 ),
 
               ],
@@ -125,4 +100,100 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Container();
   }
+   void containerForSheet<T>({BuildContext context, Widget child}) {
+   showCupertinoModalPopup<T>(
+    context: context,
+    builder: (BuildContext context) => child,
+  ).then<void>((T value) {
+    Scaffold.of(context).showSnackBar(new SnackBar(
+      content: new Text('You clicked $value'),
+      duration: Duration(milliseconds: 800),
+    ));
+  });
 }
+
+  onSubmit() {
+    Navigator.pushNamed(context, Routes.report_incident1);
+  }
+}
+
+
+//RaisedButton(
+////child: Text('Like my Work ?'),
+////onPressed: () {
+////containerForSheet<String>(
+////context: context,
+////child: CupertinoActionSheet(
+////title: const Text('Choose frankly 😊'),
+////message: const Text(
+////'Your options are '),
+////actions: <Widget>[
+////CupertinoActionSheetAction(
+////child: const Text('🙋 Yes'),
+////onPressed: () {
+////Navigator.pop(context, '🙋 Yes');
+////},
+////),
+////CupertinoActionSheetAction(
+////child: const Text('🙋 No'),
+////onPressed: () {
+////Navigator.pop(context, '🙋 No');
+////},
+////),
+////CupertinoActionSheetAction(
+////child: const Text("🙋 Can't say"),
+////onPressed: () {
+////Navigator.pop(context, "🙋 Can't say");
+////},
+////),
+////CupertinoActionSheetAction(
+////child: const Text("🙋 Decide in next post"),
+////onPressed: () {
+////Navigator.pop(context, "🙋 Decide in next post");
+////},
+////),
+////],
+////cancelButton: CupertinoActionSheetAction(
+////child: const Text('Cancel'),
+////isDefaultAction: true,
+////onPressed: () {
+////Navigator.pop(context, 'Cancel');
+////},
+////)),
+////);
+////}),
+
+
+
+//RaisedButton(
+//shape: new RoundedRectangleBorder(
+//borderRadius: new BorderRadius.circular(12.0),
+//side: BorderSide(color: Colorss.white_txt)),
+//color: Colorss.blue_background,
+//textColor: Colors.red,
+//padding: EdgeInsets.only(left: 30, right: 40, bottom: 15, top: 15),
+//onPressed: () {
+//Navigator.pushNamed(context, Routes.report_incident1);
+//},
+//child: Row(
+//mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//children: <Widget>[
+//Padding(
+//padding: EdgeInsets.only(right: 40, left: 0),
+//child: Icon(Icons.camera_alt, color: Colorss.white,),
+//)
+//,
+//Padding(
+//padding: EdgeInsets.only(right: 40, left: 0),
+//child: Text(
+//"Report An Incident".toUpperCase(),
+//style: TextStyle(
+//color: Colors.white,
+//fontSize: 17.0,
+//),
+//),
+//),
+//
+//],
+//)
+//)

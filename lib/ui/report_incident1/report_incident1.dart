@@ -11,6 +11,8 @@ import 'package:flutter_app/widgets/text_field_inactive.dart';
 import 'package:flutter_app/widgets/text_field_large.dart';
 import 'package:flutter_app/widgets/text_title.dart';
 
+import '../../routes.dart';
+
 class ReportIncidentScreen1 extends StatefulWidget {
 
   @override
@@ -63,7 +65,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
                  Expanded(
 
 
-                  child : MyTextField().setTextField(context, myController),
+                  child : MyTextField().setTextField(context, myController,Strings.address_hint),
                    flex: 4,
                  ),
                  SizedBox(width: Dimens.vertical_padding_small,),
@@ -71,7 +73,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
                  Expanded(
 
 
-                   child : MyTextField().setTextField(context, myController),
+                   child : MyTextField().setTextField(context, myController,Strings.street_hint),
                    flex: 1,
                  ),
                ],
@@ -79,21 +81,21 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
               SizedBox(height: Dimens.vertical_padding,),
               MyTextFieldInActive().setTextField(context, myController),
               SizedBox(height: Dimens.vertical_padding,),
-              MySubmitButton().setButton(context, 'Map'),
+              MySubmitButton().setButton(context, 'Map',onSubmit),
 
 
 
               SizedBox(height: Dimens.vertical_margin,),
               MyTextTitle().setTextInput(context, Icons.assignment_late, Strings.incident_type),
               SizedBox(height: Dimens.vertical_padding,),
-              MyTextField().setTextField(context, myController),
+              MyTextField().setTextField(context, myController,Strings.incident_type_hint),
 
               SizedBox(height: Dimens.vertical_margin,),
-              MyTextTitle().setTextInput(context, Icons.mode_comment, Strings.picture_of_the_incident),
+              MyTextTitle().setTextInput(context, Icons.mode_comment, Strings.comment),
               SizedBox(height: Dimens.vertical_padding,),
-              MyTextFieldLarge().setTextField(context, myController),
+              MyTextFieldLarge().setTextField(context, myController, Strings.comment_hint),
               SizedBox(height: Dimens.vertical_padding,),
-              MySubmitButton().setButton(context, 'Submit'),
+              MySubmitButton().setButton(context, 'Submit',onSubmit),
 
             ],
           ),
@@ -122,8 +124,8 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   }
 
 
-  onSubmit() {
-    print(myController.text);
+ void onSubmit() {
+   Navigator.pushNamed(context, Routes.report_incident2);
 
   }
 }

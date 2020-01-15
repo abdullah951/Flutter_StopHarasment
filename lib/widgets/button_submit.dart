@@ -5,7 +5,7 @@ import 'package:flutter_app/constants/strings.dart';
 class MySubmitButton {
 
 
-  setButton(context,String title) {
+  setButton(context,String title,Function click ) {
     return RaisedButton(
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(8.0),
@@ -14,7 +14,7 @@ class MySubmitButton {
         textColor: Colorss.white_txt,
         padding: EdgeInsets.only(left: 30, right: 40, bottom: 15, top: 15),
         onPressed: () {
-
+        click();
         },
         child: Center(
           child: Text(

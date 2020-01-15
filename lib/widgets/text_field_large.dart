@@ -4,7 +4,7 @@ import 'package:flutter_app/constants/strings.dart';
 class MyTextFieldLarge {
 
 
-  setTextField(context, TextEditingController myController) {
+  setTextField(context, TextEditingController myController,String label) {
     return new TextFormField(
 
 
@@ -30,7 +30,7 @@ class MyTextFieldLarge {
 
 
           ),
-          labelText: 'Enter yo',
+          labelText: label,
           ),
 
 

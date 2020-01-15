@@ -14,11 +14,17 @@ class Strings {
   static const String map = "MAP";
   static const String incident_type = "INCIDENT_TYPE *";
   static const String incident_type_hint = "Incident Type";
-  static const String comment = "COMMENTs";
+  static const String comment = "Add COMMENTS";
+  static const String comment_hint = "Comments";
   static const String submit = "SUBMIT";
-  static const String street = "N8";
+  static const String street_hint = "N8";
 
   // Report Incident 2/2
   static const String appBar2 = "Report Incident 2/2";
+  static const String stay_anonymous = "STAY ANONYMOUS ";
+  static const String coordinates = "COORDINATES ";
+  static const String name_hint = "Name * ";
+  static const String email_hint = "Email * ";
+  static const String phone_hint = "Phone ";
 
 }

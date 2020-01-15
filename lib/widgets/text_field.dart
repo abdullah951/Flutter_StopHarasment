@@ -4,7 +4,7 @@ import 'package:flutter_app/constants/strings.dart';
 class MyTextField {
 
 
-  setTextField(context, TextEditingController myController) {
+  setTextField(context, TextEditingController myController,String label) {
     return new TextFormField(
       style: new TextStyle(
           fontSize: 15.0,
@@ -21,7 +21,7 @@ class MyTextField {
 
 
           ),
-          labelText: 'Enter your name',
+          labelText: label,
           ),
 
 
