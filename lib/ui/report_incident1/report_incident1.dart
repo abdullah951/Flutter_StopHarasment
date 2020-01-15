@@ -124,5 +124,6 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
   onSubmit() {
     print(myController.text);
+
   }
 }
