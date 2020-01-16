@@ -5,7 +5,7 @@ import 'package:flutter_app/constants/strings.dart';
 class MyTextFieldInActive {
 
 
-  setTextField(context, TextEditingController myController) {
+  setTextField(context,String label) {
     return new TextFormField(
 
       enabled: false,
@@ -14,15 +14,20 @@ class MyTextFieldInActive {
 
       style: new TextStyle(
           fontSize: 15.0,
+        color: Colors.black87,
 
 
 
       ),
 
-      controller: myController,
+
       decoration: InputDecoration(
        enabled: false,
-        hintText: Strings.address_hint,
+        hintText: label,
+        hintStyle: new TextStyle(
+          fontSize: 15.0,
+          color: Colors.black87,
+        ),
 
         fillColor:  Colors.grey[300],
           filled: true,

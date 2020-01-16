@@ -27,7 +27,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: MyAppBar().setAppBar(context, Strings.appBar1),
+      appBar: MyAppBar().setAppBar(context, Strings.appBar1,GoBack),
       body: ListView(
 
         children: <Widget>[
@@ -65,7 +65,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
                  Expanded(
 
 
-                  child : MyTextField().setTextField(context, myController,Strings.address_hint),
+                  child : MyTextField().setTextField(context, AddressController,Strings.address_hint),
                    flex: 4,
                  ),
                  SizedBox(width: Dimens.vertical_padding_small,),
@@ -79,7 +79,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
                ],
               ),
               SizedBox(height: Dimens.vertical_padding,),
-              MyTextFieldInActive().setTextField(context, myController),
+              MyTextFieldInActive().setTextField(context,Strings.address_hint),
               SizedBox(height: Dimens.vertical_padding,),
               MySubmitButton().setButton(context, 'Map',onSubmit),
 
@@ -93,7 +93,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
               SizedBox(height: Dimens.vertical_margin,),
               MyTextTitle().setTextInput(context, Icons.mode_comment, Strings.comment),
               SizedBox(height: Dimens.vertical_padding,),
-              MyTextFieldLarge().setTextField(context, myController, Strings.comment_hint),
+              MyTextFieldLarge().setTextField(context, CommentController, Strings.comment_hint),
               SizedBox(height: Dimens.vertical_padding,),
               MySubmitButton().setButton(context, 'Submit',onSubmit),
 
@@ -127,5 +127,8 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
  void onSubmit() {
    Navigator.pushNamed(context, Routes.report_incident2);
 
+  }
+  void GoBack() {
+    Navigator.of(context).pop(true);
   }
 }

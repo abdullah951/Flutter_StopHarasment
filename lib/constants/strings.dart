@@ -26,5 +26,6 @@ class Strings {
   static const String name_hint = "Name * ";
   static const String email_hint = "Email * ";
   static const String phone_hint = "Phone ";
+  static const String stay_anonymous_warning = "Thank you ! Your incident has been sent to the competent service. An E-mail containing the incident information has been sent to your address";
 
 }
