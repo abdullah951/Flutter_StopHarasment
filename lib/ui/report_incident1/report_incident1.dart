@@ -125,7 +125,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
 
  void onSubmit() {
-   Navigator.pushNamed(context, Routes.report_incident2);
+   Navigator.pushNamed(context, Routes.incident_type);
 
   }
   void GoBack() {
