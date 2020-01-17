@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
+import 'package:flutter_app/routes.dart';
+import 'package:flutter_app/ui/Incident_type/incident_type2.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 
 class IncidentTypeScreen extends StatefulWidget {
@@ -10,6 +12,20 @@ class IncidentTypeScreen extends StatefulWidget {
 }
 
 class _IncidentTypeScreenState extends State<IncidentTypeScreen> {
+  Color color;
+  int _selectedIndex;
+  _onSelected(int index) {
+
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+
+    color = Colors.transparent;
+  }
   final europeanCountries = ['Albania', 'Andorra', 'Armenia', 'Austria',
     'Azerbaijan', 'Belarus', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria',
     'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 'Finland',
@@ -36,11 +52,16 @@ class _IncidentTypeScreenState extends State<IncidentTypeScreen> {
             return GestureDetector(
               onTap: (){
                 print(europeanCountries[index]+'');
-                //goback();
+                _onSelected(index);
+                nextPage(europeanCountries[index]+'');
+
               },
               child: Container(
+
                 width: double.maxFinite,
-                color: Colors.transparent,
+                color: _selectedIndex != null && _selectedIndex == index
+                    ? Colorss.blue_background
+                    : Colors.transparent,
 
                 padding: EdgeInsets.all(15),
 
@@ -78,5 +99,12 @@ class _IncidentTypeScreenState extends State<IncidentTypeScreen> {
 
   goback() {
     Navigator.pop(context);
+
+  }
+  nextPage(String name){
+    print(name);
+    Navigator.push(context,MaterialPageRoute(
+      builder: (context) => IncidentType2Screen(name),
+    ), );
   }
 }

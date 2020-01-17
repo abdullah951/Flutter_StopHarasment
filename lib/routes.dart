@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/incident_type.dart';
+import 'package:flutter_app/ui/Incident_type/incident_type.dart';
+import 'package:flutter_app/ui/Incident_type/incident_type2.dart';
 import 'package:flutter_app/ui/map/map.dart';
 import 'package:flutter_app/ui/report_incident1/report_incident1.dart';
 import 'package:flutter_app/ui/report_incident2/report_incident2.dart';
@@ -17,6 +18,7 @@ class Routes {
   static const String report_incident1 = '/report_incident1';
   static const String report_incident2 = '/report_incident2';
   static const String incident_type = '/incident_type';
+  static const String incident_type2 = '/incident_type2';
 
   static final routes = <String, WidgetBuilder>{
     splash: (BuildContext context) => SplashScreen(),
@@ -25,7 +27,9 @@ class Routes {
     report_incident1: (BuildContext context) => ReportIncidentScreen1(),
     report_incident2: (BuildContext context) => ReportIncidentScreen2(),
     incident_type: (BuildContext context) => IncidentTypeScreen(),
+
   };
+
 }
 
 

@@ -12,7 +12,7 @@ class MyTextTitle {
         children: <Widget>[
           Icon(icon, color: Colorss.blue_background),
           SizedBox(width: 10,),
-          Text(title, style: TextStyle(color: Colorss.blue_background,fontSize: 15,fontWeight: FontWeight.bold),)
+          Text(title, style: TextStyle(color: Colorss.blue_background,fontSize: 15),)
         ],
       ),
     );;

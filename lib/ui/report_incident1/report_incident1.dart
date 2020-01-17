@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
@@ -6,10 +8,12 @@ import 'package:flutter_app/constants/strings.dart';
 import 'package:flutter_app/constants/dimens.dart' ;
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button_submit.dart';
+import 'package:flutter_app/widgets/circular_image_widget.dart';
 import 'package:flutter_app/widgets/text_field.dart';
 import 'package:flutter_app/widgets/text_field_inactive.dart';
 import 'package:flutter_app/widgets/text_field_large.dart';
 import 'package:flutter_app/widgets/text_title.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../routes.dart';
 
@@ -23,6 +27,20 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   final myController = TextEditingController();
   final AddressController = TextEditingController();
   final CommentController = TextEditingController();
+
+  File _image;
+  List<File> _imageFiles=List<File>();
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      image!=null?_imageFiles.add(image):null;
+
+
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -39,24 +57,50 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
             children: <Widget>[
               MyTextTitle().setTextInput(context, CupertinoIcons.photo_camera_solid, Strings.picture_of_the_incident),
               SizedBox(height: Dimens.vertical_padding,),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: SizedBox(
-                      width: 20,
-                      height: 100.0,
-                      child: new ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        itemBuilder: (BuildContext ctxt, int index) {
-                          return _circularImageWidget();
-                        },
-                      ),
+              Container(
+                height: 100,
+
+                child: ListView(
+
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    new ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: _imageFiles.length == null ? 0 : _imageFiles.length ,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          
+                          child: _imageFiles.length == null
+                              ? null
+                              :  new  CircleAvatar(
+                            radius: 50,
+
+
+                            backgroundImage: FileImage(_imageFiles[index]),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                  _circularImageWidget()
-                ],
+                    GestureDetector(
+                      onTap: getImage,
+                      child: CircleAvatar(
+
+                        radius: 50,
+                        backgroundImage:  AssetImage('assets/images/ic_add.png'),
+                        backgroundColor: Colorss.add_btn_bg,
+
+
+
+
+                      ),
+                    )
+
+                  ],
+                ),
               ),
+
               SizedBox(height: Dimens.vertical_margin,),
               MyTextTitle().setTextInput(context, CupertinoIcons.location_solid, Strings.address),
               SizedBox(height: Dimens.vertical_padding,),
@@ -105,30 +149,20 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
     );
   }
 
-  Widget _circularImageWidget() {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-            width: 4,
-            color: Colorss.add_btn_bg
-        ),
-        image: DecorationImage(
-            fit: BoxFit.fill,
-            image: AssetImage('assets/images/ic_add.png')
-        ),
-      ),
-    );
-  }
+
 
 
  void onSubmit() {
-   Navigator.pushNamed(context, Routes.incident_type);
+  // _imageFiles.clear();
+  Navigator.pushNamed(context, Routes.incident_type);
+   //getImage();
 
   }
   void GoBack() {
     Navigator.of(context).pop(true);
+  }
+
+  click() {
+   // getImage();
   }
 }

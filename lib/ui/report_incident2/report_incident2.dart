@@ -10,6 +10,7 @@ import 'package:flutter_app/widgets/text_field_inactive.dart';
 import 'package:flutter_app/widgets/text_title.dart';
 
 class ReportIncidentScreen2 extends StatefulWidget {
+
   @override
   _ReportIncidentScreen2State createState() => _ReportIncidentScreen2State();
 }

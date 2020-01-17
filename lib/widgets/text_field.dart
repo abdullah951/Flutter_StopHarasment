@@ -13,6 +13,17 @@ class MyTextField {
       ),
 
       controller: myController,
+      validator: (value) {
+        if (value.isEmpty) {
+          print('Please enter some text');
+          return 'Please enter some text';
+        }
+        print('Please');
+        return null;
+      },
+
+
+
       decoration: InputDecoration(
 
           enabledBorder: OutlineInputBorder(
