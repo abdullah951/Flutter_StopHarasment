@@ -125,7 +125,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
               SizedBox(height: Dimens.vertical_padding,),
               MyTextFieldInActive().setTextField(context,Strings.address_hint),
               SizedBox(height: Dimens.vertical_padding,),
-              MySubmitButton().setButton(context, 'Map',onSubmit),
+              MySubmitButton().setButton(context, 'Map',onMap),
 
 
 
@@ -149,7 +149,9 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
     );
   }
 
-
+  void onMap(){
+    Navigator.pushNamed(context, Routes.map);
+  }
 
 
  void onSubmit() {
