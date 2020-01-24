@@ -75,7 +75,7 @@ class _IncidentTypeScreenState extends State<IncidentTypeScreen> {
            .push(context,MaterialPageRoute(
          builder: (context) => IncidentType2Screen(_newsArticles[index].id.toString()),
        ), );
-      Navigator.pop(context,checkCategory);
+      checkCategory!=null?Navigator.pop(context,checkCategory):print("d");
      }else{
        Navigator.pop(context,checks);
      }
