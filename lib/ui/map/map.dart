@@ -187,7 +187,8 @@ class _MapScreenState extends State<MapScreen> {
 
 
   click() {
-    Navigator.pop(context, MapData(this.locality,this.throughput, this.featurename, this.lat, this.lng));
+    Navigator.pop(context, {"locality":this.locality,"throughput":this.throughput,"featurename":this.featurename,"lat":this.lat,"lng":this.lng});
+//    MapData(this.locality,this.throughput, this.featurename, this.lat, this.lng));
   }
 
   void _getLocationPermission() async {

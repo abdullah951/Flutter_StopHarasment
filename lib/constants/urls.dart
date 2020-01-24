@@ -12,9 +12,10 @@
    static const String GetCategoryScreen = "GetCategory";
    static const String GetSubCategoryScreen = "GetSubCategoryByCategory";
    static const String GetItemScreen = "GetItemBySubCategory";
-   static const String CheckCategoryScreen = "CheckCategoryById";
-   static const String CheckSubCategoryScreen = "";
-   static const String CheckItemScreen = "CheckSubCheckSubCategoryByIdCategoryItemById";
+
+   static const String CheckCategoryScreen = "GetCategoryById";
+   static const String CheckSubCategoryScreen = "GetSubCategoryById";
+   static const String CheckItemScreen = "GetSubCategoryItemById";
 
 
 

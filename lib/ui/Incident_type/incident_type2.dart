@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/strings.dart';
 import 'package:flutter_app/constants/urls.dart';
+import 'package:flutter_app/model/CheckCategory.dart';
 import 'package:flutter_app/model/GetCategory.dart';
 
 import 'package:flutter_app/routes.dart';
@@ -33,6 +34,7 @@ class _IncidentType2ScreenState extends State<IncidentType2Screen> {
 
 
   List<GetCategory> _newsArticles = List<GetCategory>();
+  var checkCategory;
 
 
 
@@ -78,11 +80,49 @@ class _IncidentType2ScreenState extends State<IncidentType2Screen> {
 
   }
 
+
   action(int index) {
-    print(_newsArticles[index].name +" get title is");
-    Navigator.push(context,MaterialPageRoute(
-      builder: (context) => IncidentType3Screen(_newsArticles[index].id.toString()),
-    ),
-    );
+    print(_newsArticles[index].id.toString() +" get id is");
+    String url= Urls.GetCategory+"?"+GetParameters.Screen+"="+Screens.CheckSubCategoryScreen+"&"+GetParameters.Id+"="+_newsArticles[index].id.toString();
+
+    Webservice().load(CheckCategory.checks(url)).then((checks) async {
+    if(checks.status){
+    checkCategory   = await   Navigator
+        .push(context,MaterialPageRoute(
+    builder: (context) => IncidentType3Screen(_newsArticles[index].id.toString()),
+    ), );
+    Navigator.pop(context,checkCategory);
+    }else{
+    Navigator.pop(context,checks);
+    }
+
+    });
+//    Webservice().load( Resource(
+//        url:Urls.GetCategory+"?"+GetParameters.Screen+"="+Screens.CheckCategoryScreen+"&"+GetParameters.Id+"="+_newsArticles[index].id.toString() ,
+//        parse: (response) {
+//          final result = json.decode(response.body);
+//          print(result['status']['result'][0]);
+//
+//
+//
+//          bool status = result['status']['result'][0]['status']!=0?true:false;
+//
+//
+//
+//          return status;
+//        }
+//    )).then((data) =>{
+//
+//    if(data){
+//      Navigator
+//    .push(context,MaterialPageRoute(
+//    builder: (context) => IncidentType2Screen(_newsArticles[index].id.toString()),
+//    ), )
+//  }else{
+//      Navigator.pop(context,{})
+//    }
+//
+//    });
+
   }
 }

@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/strings.dart';
 import 'package:flutter_app/constants/dimens.dart' ;
+import 'package:flutter_app/model/CheckCategory.dart';
 import 'package:flutter_app/model/MapData.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button_submit.dart';
 import 'package:flutter_app/widgets/circular_image_widget.dart';
 import 'package:flutter_app/widgets/text_field.dart';
 import 'package:flutter_app/widgets/text_field_inactive.dart';
+import 'package:flutter_app/widgets/text_field_inactive_simple.dart';
 import 'package:flutter_app/widgets/text_field_large.dart';
 import 'package:flutter_app/widgets/text_title.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,9 +30,11 @@ class ReportIncidentScreen1 extends StatefulWidget {
 class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   final myController = TextEditingController();
   final AddressController = TextEditingController();
+  final StreetController = TextEditingController();
   final CommentController = TextEditingController();
+  final IncidentController= TextEditingController();
 
-  var resultMap;
+  MapData resultMap;
 
   File _image;
   List<File> _imageFiles=List<File>();
@@ -121,7 +125,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
                  Expanded(
 
 
-                   child : MyTextField().setTextField(context, myController,Strings.street_hint),
+                   child : MyTextField().setTextField(context,StreetController,Strings.street_hint),
                    flex: 1,
                  ),
                ],
@@ -136,7 +140,14 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
               SizedBox(height: Dimens.vertical_margin,),
               MyTextTitle().setTextInput(context, Icons.assignment_late, Strings.incident_type),
               SizedBox(height: Dimens.vertical_padding,),
-              MyTextField().setTextField(context, myController,Strings.incident_type_hint),
+              GestureDetector(
+                onTap: onType,
+                child: AbsorbPointer(
+
+                  child: MyTextFieldInActiveSimple().setTextField(context, IncidentController,Strings.incident_type_hint),
+                ),
+              ),
+
 
               SizedBox(height: Dimens.vertical_margin,),
               MyTextTitle().setTextInput(context, Icons.mode_comment, Strings.comment),
@@ -155,13 +166,26 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
   Future<void> onMap() async {
 
-    resultMap = await Navigator.pushNamed(context, Routes.map);
-    Map userMap = jsonDecode(resultMap);
-    var user = MapData.fromJson(userMap);
-
-    print('Howdy, ${user.locality}!');
-    print('We sent the verification link to ${user.throughput}.');
+  var userMap   = await Navigator.of(context).pushNamed(Routes.map);
+  Map<String, dynamic> newMap = Map<String, dynamic>.from(userMap);
+   // Map<String, dynamic>  map=json.decode(userMap);
+   AddressController.text=newMap['throughput'];
+   StreetController.text=newMap['featurename'];
+    print("maps is    "+newMap.toString());
+//    print('We sent the verification link to ${userMap.throughput}.');
   }
+  Future<void> onType() async {
+    print("called");
+
+    var checkCategory   = await Navigator.of(context).pushNamed(Routes.incident_type);
+    CheckCategory newMap = checkCategory;
+    IncidentController.text=newMap.name;
+
+    print("maps is    "+newMap.name);
+//    print('We sent the verification link to ${userMap.throughput}.');
+  }
+
+
 
 
  void onSubmit() {

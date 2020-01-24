@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/strings.dart';
 import 'package:flutter_app/constants/urls.dart';
+import 'package:flutter_app/model/CheckCategory.dart';
 import 'package:flutter_app/model/GetCategory.dart';
 
 import 'package:flutter_app/routes.dart';
@@ -77,7 +78,13 @@ class _IncidentType3ScreenState extends State<IncidentType3Screen> {
   }
 
   action(int index) {
-    print(_newsArticles[index].name +" get title is");
+    print(_newsArticles[index].id.toString() +" get id is");
+    String url= Urls.GetCategory+"?"+GetParameters.Screen+"="+Screens.CheckItemScreen+"&"+GetParameters.Id+"="+_newsArticles[index].id.toString();
 
-  }
+    Webservice().load(CheckCategory.checks(url)).then((checks)  {
+      Navigator.pop(context,checks);
+
+
+    });
+   }
 }
