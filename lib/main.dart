@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/routes.dart';
+import 'package:flutter_app/ui/home/home.dart';
 import 'package:flutter_app/ui/splash/splash.dart';
 
 import 'constants/app_theme.dart';
@@ -41,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: Strings.appName,
       theme: themeData,
       routes: Routes.routes,
-      home: SplashScreen(),
+      home: HomeScreen(),
     );
   }
 }

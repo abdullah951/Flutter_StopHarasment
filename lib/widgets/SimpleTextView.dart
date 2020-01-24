@@ -10,7 +10,7 @@ class SimpleTextView {
 
       child: new Row(
         children: <Widget>[
-          Text(title, style: TextStyle(color: Colors.black, fontSize: 15),textAlign: TextAlign.center,)
+          Text(title, style: TextStyle(color: Colors.black, fontSize: 17),textAlign: TextAlign.center,)
         ],
       ),
     );;

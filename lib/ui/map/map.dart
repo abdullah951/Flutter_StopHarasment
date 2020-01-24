@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flushbar/flushbar_helper.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/dimens.dart';
 import 'package:flutter_app/constants/strings.dart';
+import 'package:flutter_app/model/MapData.dart';
 import 'package:flutter_app/widgets/SimpleTextView.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button_submit.dart';
@@ -28,8 +30,10 @@ class _MapScreenState extends State<MapScreen> {
 
   static LatLng _initialPosition;
   static  LatLng _lastMapPosition = _initialPosition;
-  String address;
+  String address, locality, throughput, featurename, text = Strings.loading;
+  double lat, lng;
   Completer<GoogleMapController> _controller = Completer();
+
 
   LocationData  currentLocation;
 
@@ -41,9 +45,7 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     //_getLocationPermission();
     // _getUserLocation();
-
-
-
+    text = Strings.loading;
   }
 
   @override
@@ -54,20 +56,23 @@ class _MapScreenState extends State<MapScreen> {
       body: Container(
           margin: EdgeInsets.symmetric(vertical: Dimens.vertical_margin,horizontal: Dimens.horizontal_padding),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height*0.9,
-          width: MediaQuery.of(context).size.width*0.9,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           child: Column(
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   //Text("Loading..."),
-                  SimpleTextView().setTextInput(context, "Loading..."),
+                  SimpleTextView().setTextInput(context, text?? Strings.loading),
+                  SizedBox(width: 70),
                   MySubmitButton().setButton(context, "Ok", click)
                 ],
               ),
+              SizedBox(height: 20),
               SizedBox(
-                height: 300,
+                height: MediaQuery.of(context).size.height*0.7,
+                width: MediaQuery.of(context).size.width*0.9,
                 child: Stack(
                   children: <Widget>[
                     GoogleMap(
@@ -173,6 +178,7 @@ class _MapScreenState extends State<MapScreen> {
 
   void _onCameraMove(CameraPosition position) {
     _lastMapPosition = position.target;
+    updateAddressTextView(Strings.loading);
   }
 
   void GoBack() {
@@ -181,6 +187,7 @@ class _MapScreenState extends State<MapScreen> {
 
 
   click() {
+    Navigator.pop(context, MapData(this.locality,this.throughput, this.featurename, this.lat, this.lng));
   }
 
   void _getLocationPermission() async {
@@ -231,12 +238,25 @@ class _MapScreenState extends State<MapScreen> {
 
 
   void _onCameraIdle() async {
+      updateAddressTextView(Strings.loading);
 
       final coordinates = new Coordinates(
           _lastMapPosition.latitude, _lastMapPosition.longitude);
       var addresses = await Geocoder.local.findAddressesFromCoordinates(
           coordinates);
       var first = addresses.first;
+      var address = first.addressLine.split(',');
+      print(address[0]);
+      print(address[1]);
+      throughput = first.thoroughfare;
+      locality = first.locality;
+      featurename = first.featureName;
+      lat = _lastMapPosition.latitude;
+      lng = _lastMapPosition.longitude;
+
+
+      updateAddressTextView(address[0] + ", \n" + address[1]);
+
       print(' ${first.locality}, ${first.adminArea},${first.subLocality}, ${first.subAdminArea},${first.addressLine}, ${first.featureName},${first.thoroughfare}, ${first.subThoroughfare}');
 
 
@@ -251,4 +271,11 @@ class _MapScreenState extends State<MapScreen> {
         zoom: 18.151926040649414);
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
+
+  updateAddressTextView(String address) {
+    setState(() {
+      text = address;
+    });
+  }
+
 }

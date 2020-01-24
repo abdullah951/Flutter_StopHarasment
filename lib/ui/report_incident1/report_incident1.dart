@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/strings.dart';
 import 'package:flutter_app/constants/dimens.dart' ;
+import 'package:flutter_app/model/MapData.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button_submit.dart';
 import 'package:flutter_app/widgets/circular_image_widget.dart';
@@ -27,6 +29,8 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   final myController = TextEditingController();
   final AddressController = TextEditingController();
   final CommentController = TextEditingController();
+
+  var resultMap;
 
   File _image;
   List<File> _imageFiles=List<File>();
@@ -149,8 +153,14 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
     );
   }
 
-  void onMap(){
-    Navigator.pushNamed(context, Routes.map);
+  Future<void> onMap() async {
+
+    resultMap = await Navigator.pushNamed(context, Routes.map);
+    Map userMap = jsonDecode(resultMap);
+    var user = MapData.fromJson(userMap);
+
+    print('Howdy, ${user.locality}!');
+    print('We sent the verification link to ${user.throughput}.');
   }
 
 
