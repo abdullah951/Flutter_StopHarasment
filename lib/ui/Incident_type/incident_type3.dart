@@ -15,21 +15,19 @@ import 'package:flutter_app/widgets/incident_type_item_divider.dart';
 import 'package:flutter_app/widgets/incident_type_list.dart';
 import 'package:http/http.dart' as http;
 
-import 'incident_type3.dart';
-
-class IncidentType2Screen extends StatefulWidget {
+class IncidentType3Screen extends StatefulWidget {
   final String names;
-  IncidentType2Screen(this.names);
+  IncidentType3Screen(this.names);
 
 
   @override
-  _IncidentType2ScreenState createState() => _IncidentType2ScreenState(names);
+  _IncidentType3ScreenState createState() => _IncidentType3ScreenState(names);
 }
 
-class _IncidentType2ScreenState extends State<IncidentType2Screen> {
+class _IncidentType3ScreenState extends State<IncidentType3Screen> {
   String names;
 
-  _IncidentType2ScreenState(this.names);
+  _IncidentType3ScreenState(this.names);
 
 
   List<GetCategory> _newsArticles = List<GetCategory>();
@@ -67,7 +65,7 @@ class _IncidentType2ScreenState extends State<IncidentType2Screen> {
     Navigator.popUntil(context, ModalRoute.withName(Routes.report_incident1));
   }
   void _populateNewsArticles() {
-    String url=Urls.GetCategory+"?"+GetParameters.Screen+"="+Screens.GetSubCategoryScreen+"&"+GetParameters.Id+"="+names;
+    String url=Urls.GetCategory+"?"+GetParameters.Screen+"="+Screens.GetItemScreen+"&"+GetParameters.Id+"="+names;
     print(url);
 
     Webservice().load(GetCategory.all(url)).then((newsArticles) => {
@@ -80,9 +78,6 @@ class _IncidentType2ScreenState extends State<IncidentType2Screen> {
 
   action(int index) {
     print(_newsArticles[index].name +" get title is");
-    Navigator.push(context,MaterialPageRoute(
-      builder: (context) => IncidentType3Screen(_newsArticles[index].id.toString()),
-    ),
-    );
+
   }
 }

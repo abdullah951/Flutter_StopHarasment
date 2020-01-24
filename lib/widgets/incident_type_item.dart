@@ -25,6 +25,7 @@ class MyIncidentItem {
             SizedBox(width: 25,),
             Text(title, style: TextStyle(
               color: Colorss.blue_background,
+              fontSize: 18,
 
             ),),
 

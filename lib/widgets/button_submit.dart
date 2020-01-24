@@ -7,8 +7,10 @@ class MySubmitButton {
 
   setButton(context,String title,Function click ) {
     return RaisedButton(
+
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(8.0),
+
             ),
             color: Colorss.blue_background,
         textColor: Colorss.white_txt,
