@@ -2,6 +2,10 @@
     "app_name": "Stop Violence",
     "appBar1" : "Report Incidentios",
     "picture_of_the_incident" : "PICTURE OF THE INCIDENT *",
-    "address" :"ADDRESS *"
+    "address" :"ADDRESS *",
+    "NoImages": "Please upload an image",
+    "NoLocation": "Please Add your location",
+    "NoComment": "Please Add a comment",
+    "NoIncidentType": "Please Select incident Type"
 
 }

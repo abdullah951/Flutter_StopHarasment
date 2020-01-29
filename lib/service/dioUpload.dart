@@ -2,9 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/adapter.dart';
+import 'package:flutter_app/constants/urls.dart';
+import 'package:flutter_app/main.dart';
 
 
 class dioupload{
+  Dio dio;
+  Response response;
+
 
 
 
@@ -14,15 +19,20 @@ void showProgress(received, total) {
   }
 }
 
-Future<FormData> FormData1() async {
-  print("called");
+Future<FormData> FormData1(List<File> file) async {
+  print(file.length);
+  var files2=[];
+  for(int i=0;i<file.length;i++){
+   files2.add(await MultipartFile.fromFile(file[i].path, filename: file[i].toString()));
+  }
+
 
   return FormData.fromMap({
     "name": "wendux",
     "age": 25,
-    "id":"119567",
-    "file":
-    await MultipartFile.fromFile("assets/images/ic_add_circle.png", filename: "ic_add.png"),
+    "id":"11956780",
+    "files":files2
+
 //    "files": [
 //      await MultipartFile.fromFile("./example/upload.txt",
 //          filename: "upload.txt"),
@@ -63,42 +73,77 @@ Future<FormData> FormData3() async {
   });
 }
 
+FileUpload(List<File> file) async {
+  main();
+  print(file.length);
+  response = await dio.post(
+    //"/upload",
+      "http://192.168.100.12:8082/api/file/upload",
+      data: await FormData1(file),
+
+  onSendProgress: (received, total) {
+  if (total != -1) {
+  print((received / total * 100).toStringAsFixed(0) + "%");
+  }
+  },
+  );
+  print(response);
+
+}
+AddIncident(var maps) async {
+    main();
+
+    Map<String, dynamic>   newMap = Map<String, dynamic>.from(maps);
+    print(newMap);
+    response = await dio.post(
+      //"/upload",
+      Urls.add_incident,
+      data: newMap,
+
+      onSendProgress: (received, total) {
+        if (total != -1) {
+          print((received / total * 100).toStringAsFixed(0) + "%");
+        }
+      },
+    );
+    print(response);
+
+  }
+
 /// FormData will create readable "multipart/form-data" streams.
 /// It can be used to submit forms and file uploads to http server.
-main() async {
-  var dio = Dio();
-  dio.options.baseUrl = "http://192.168.10.5:8082/api/file/upload";
+  main() async {
+
+  dio = Dio();
+  dio.options.baseUrl = "http://192.168.100.12:8082/api/file/upload";
   dio.interceptors.add(LogInterceptor());
   //dio.interceptors.add(LogInterceptor(requestBody: true));
   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
       (HttpClient client) {
-    client.findProxy = (uri) {
-      //proxy all request to localhost:8888
-      return "PROXY localhost:8888";
-    };
+
     client.badCertificateCallback =
         (X509Certificate cert, String host, int port) => true;
   };
-  Response response;
 
 
-  var formData1 = await FormData1();
-  var bytes2 = await formData1.readAsBytes();
 
 
-  var t = await FormData3();
-  print(utf8.decode(await t.readAsBytes()));
 
-  response = await dio.post(
-    //"/upload",
-    "http://localhost:3000/upload",
-    data: await FormData1(),
-    onSendProgress: (received, total) {
-      if (total != -1) {
-        print((received / total * 100).toStringAsFixed(0) + "%");
-      }
-    },
-  );
-  print(response);
+
+  //var t = await FormData3();
+
+
+//  response = await dio.post(
+//    //"/upload",
+//    "http://192.168.100.12:8082/api/file/upload",
+//    data: await FormData1(file),
+//
+//    onSendProgress: (received, total) {
+//      if (total != -1) {
+//        print((received / total * 100).toStringAsFixed(0) + "%");
+//      }
+//    },
+//  );
+
 }
 }

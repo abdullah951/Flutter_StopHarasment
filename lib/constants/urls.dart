@@ -1,7 +1,7 @@
  class Urls {
-   static const String url = "http://ec2-18-223-107-103.us-east-2.compute.amazonaws.com:8082/api/";
+   //static const String url = "http://ec2-18-223-107-103.us-east-2.compute.amazonaws.com:8082/api/";
 
-   //public static final String url="http://192.168.100.19:8082/api/";
+   static const String url="http://192.168.100.12:8082/api/";
    static const String add_incident = url + "Incident/Add";
    static const String GetCategory = url + "Category/Get";
    static const String NEW_INCIDENT_STATUS = "created";

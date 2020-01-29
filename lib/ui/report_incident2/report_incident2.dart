@@ -10,6 +10,9 @@ import 'package:flutter_app/widgets/text_field_inactive.dart';
 import 'package:flutter_app/widgets/text_title.dart';
 
 class ReportIncidentScreen2 extends StatefulWidget {
+  Map<String, dynamic> maps;
+  ReportIncidentScreen2(this.maps);
+
 
   @override
   _ReportIncidentScreen2State createState() => _ReportIncidentScreen2State();
@@ -121,9 +124,11 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
   }
 
   onSubmit() {
+
     Navigator.of(context).pop(true);
   }
 
   void GoBack() {
+
   }
 }

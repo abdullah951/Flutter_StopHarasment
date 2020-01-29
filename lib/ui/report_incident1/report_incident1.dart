@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Utils/utils.dart';
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/strings.dart';
 import 'package:flutter_app/constants/dimens.dart' ;
@@ -11,6 +12,7 @@ import 'package:flutter_app/localization/app_localizations.dart';
 import 'package:flutter_app/model/CheckCategory.dart';
 import 'package:flutter_app/model/MapData.dart';
 import 'package:flutter_app/service/dioUpload.dart';
+import 'package:flutter_app/ui/report_incident2/report_incident2.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button_submit.dart';
 import 'package:flutter_app/widgets/circular_image_widget.dart';
@@ -39,6 +41,8 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   final IncidentController = TextEditingController();
 
   MapData resultMap;
+  Map<String, dynamic> newMap;
+  CheckCategory checkMap;
 
   File _image;
   List<File> _imageFiles = List<File>();
@@ -180,7 +184,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
   Future<void> onMap() async {
     var userMap = await Navigator.of(context).pushNamed(Routes.map);
-    Map<String, dynamic> newMap = Map<String, dynamic>.from(userMap);
+     newMap = Map<String, dynamic>.from(userMap);
     // Map<String, dynamic>  map=json.decode(userMap);
     AddressController.text = newMap['throughput'];
     StreetController.text = newMap['featurename'];
@@ -193,19 +197,40 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
     var checkCategory = await Navigator.of(context).pushNamed(
         Routes.incident_type);
-    CheckCategory newMap = checkCategory;
-    IncidentController.text = newMap.name;
+    checkMap = checkCategory;
+    IncidentController.text = checkMap.name;
 
-    print("maps is    " + newMap.name);
+    print("maps is    " + checkMap.name);
 //    print('We sent the verification link to ${userMap.throughput}.');
   }
 
 
   Future<void> onSubmit() async {
     // _imageFiles.clear();
-    //Navigator.pushNamed(context, Routes.incident_type);
-    dioupload().FormData1();
+//    if(_imageFiles.length==null||_imageFiles.length==0){
+//      Utils().showSnackBar(buildTranslate(context, 'NoImages'));
+//    }else
+    if(Utils().checkNull(StreetController.text)){
+      Utils().showSnackBar(buildTranslate(context, 'NoLocation'));
+    }else if(Utils().checkNull(IncidentController.text)){
+      Utils().showSnackBar(buildTranslate(context, 'NoIncidentType'));
+    }else if(Utils().checkNull(CommentController.text)){
+      Utils().showSnackBar(buildTranslate(context, 'NoComment'));
+    }else{
+      Navigator
+          .push(context,MaterialPageRoute(
+        builder: (context) => ReportIncidentScreen2({"address":newMap,"images":_imageFiles,"item":checkMap,"comment":CommentController.value.toString()}),
+      ), );
+    }
+
+
+
+//    Navigator.pushNamed(context, Routes.report_incident2);
+
+
+  // dioupload().AddIncident({"adress":newMap,"comment":CommentController.text});
     //getImage();
+   // dioupload().FileUpload(_imageFiles);
 
   }
 
