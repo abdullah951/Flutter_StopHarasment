@@ -4,14 +4,14 @@ import 'dart:ffi';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/service/webservice.dart';
 
-class MapData {
+class MapDatas {
 
   final String locality, throughput, featurename;
   var lat, lng;
 
-  MapData(this.locality, this.throughput, this.featurename, this.lat, this.lng);
+  MapDatas(this.locality, this.throughput, this.featurename, this.lat, this.lng);
 
-  MapData.fromJson(Map<String, dynamic> json)
+  MapDatas.fromJson(Map<String, dynamic> json)
       : locality = json['locality'],
         throughput = json['throughput'],
         featurename = json['featurename'],

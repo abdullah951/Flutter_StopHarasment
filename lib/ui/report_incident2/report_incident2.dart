@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Utils/utils.dart';
+
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/dimens.dart';
 import 'package:flutter_app/constants/strings.dart';
+import 'package:flutter_app/model/CheckCategory.dart';
+import 'package:flutter_app/service/dioUpload.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button_submit.dart';
 import 'package:flutter_app/widgets/text_field.dart';
@@ -14,18 +20,33 @@ class ReportIncidentScreen2 extends StatefulWidget {
   ReportIncidentScreen2(this.maps);
 
 
+
+
   @override
-  _ReportIncidentScreen2State createState() => _ReportIncidentScreen2State();
+  _ReportIncidentScreen2State createState() => _ReportIncidentScreen2State(maps);
 }
 
 class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
+  Map<String, dynamic> maps;
+
+  _ReportIncidentScreen2State(this.maps);
+  
+
   bool _switchValue=false;
   bool _visibilityValue=false;
   TextEditingController myController=TextEditingController();
   @override
+  void initState() {
+    super.initState();
+    var check=maps['item'];
+
+    printed(check.toString());
+  }
+  @override
   Widget build(BuildContext context) {
 
     return Scaffold(
+        
         appBar: MyAppBar().setAppBar(context, Strings.appBar2,GoBack),
         body: ListView(
 
@@ -123,9 +144,25 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
     );
   }
 
-  onSubmit() {
+  Future onSubmit() async {
 
-    Navigator.of(context).pop(true);
+
+   maps.putIfAbsent('type', () => {"by":"Anonymous","name":"kashif","email":"kashif.zahid18@gmail.com","type":"human","number":"03350542182"});
+   List<File> img=maps['images'];
+   String comment=maps['comment'];
+   maps.remove('images');
+
+
+     String s = await dioupload().AddIncident(maps);
+
+
+   String d = await dioupload().FileUpload(img,s,comment);
+   print(d);
+   d=="1"?Navigator.of(context).pop(true):Utils().showSnackBar("Incident Not reported");
+
+  }
+  void printed(String maps){
+    print(maps);
   }
 
   void GoBack() {

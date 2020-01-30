@@ -19,7 +19,7 @@ void showProgress(received, total) {
   }
 }
 
-Future<FormData> FormData1(List<File> file) async {
+Future<FormData> FormData1(List<File> file,id,comment) async {
   print(file.length);
   var files2=[];
   for(int i=0;i<file.length;i++){
@@ -28,9 +28,8 @@ Future<FormData> FormData1(List<File> file) async {
 
 
   return FormData.fromMap({
-    "name": "wendux",
-    "age": 25,
-    "id":"11956780",
+    "id":id,
+    "comment":comment,
     "files":files2
 
 //    "files": [
@@ -73,13 +72,13 @@ Future<FormData> FormData3() async {
   });
 }
 
-FileUpload(List<File> file) async {
+  Future<String> FileUpload(List<File> file,String id,String comment) async {
   main();
   print(file.length);
   response = await dio.post(
     //"/upload",
-      "http://192.168.100.12:8082/api/file/upload",
-      data: await FormData1(file),
+      Urls.fileupload,
+      data: await FormData1(file,id,comment),
 
   onSendProgress: (received, total) {
   if (total != -1) {
@@ -87,10 +86,11 @@ FileUpload(List<File> file) async {
   }
   },
   );
-  print(response);
+  print(response.data);
+  return response.data['result'].toString();
 
 }
-AddIncident(var maps) async {
+ Future<String> AddIncident(var maps) async {
     main();
 
     Map<String, dynamic>   newMap = Map<String, dynamic>.from(maps);
@@ -108,6 +108,8 @@ AddIncident(var maps) async {
     );
     print(response);
 
+    return response.data['status']['result'].toString();
+
   }
 
 /// FormData will create readable "multipart/form-data" streams.
@@ -115,7 +117,7 @@ AddIncident(var maps) async {
   main() async {
 
   dio = Dio();
-  dio.options.baseUrl = "http://192.168.100.12:8082/api/file/upload";
+  dio.options.baseUrl = Urls.fileupload;
   dio.interceptors.add(LogInterceptor());
   //dio.interceptors.add(LogInterceptor(requestBody: true));
   (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =

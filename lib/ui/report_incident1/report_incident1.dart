@@ -40,12 +40,14 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   final CommentController = TextEditingController();
   final IncidentController = TextEditingController();
 
-  MapData resultMap;
-  Map<String, dynamic> newMap;
-  CheckCategory checkMap;
+  MapDatas resultMap;
+  var Maps;
+  CheckCategory IncidentType;
 
   File _image;
   List<File> _imageFiles = List<File>();
+
+  var userMap;
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -183,12 +185,12 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   }
 
   Future<void> onMap() async {
-    var userMap = await Navigator.of(context).pushNamed(Routes.map);
-     newMap = Map<String, dynamic>.from(userMap);
+    userMap = await Navigator.of(context).pushNamed(Routes.map);
+     Maps = MapDatas.fromJson(userMap);
     // Map<String, dynamic>  map=json.decode(userMap);
-    AddressController.text = newMap['throughput'];
-    StreetController.text = newMap['featurename'];
-    print("maps is    " + newMap.toString());
+    AddressController.text =Maps.throughput;
+    StreetController.text = Maps.featurename;
+    print("maps is    " + userMap.toString());
 //    print('We sent the verification link to ${userMap.throughput}.');
   }
 
@@ -197,19 +199,20 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
     var checkCategory = await Navigator.of(context).pushNamed(
         Routes.incident_type);
-    checkMap = checkCategory;
-    IncidentController.text = checkMap.name;
 
-    print("maps is    " + checkMap.name);
+    IncidentType = checkCategory;
+    IncidentController.text = IncidentType.name;
+
+    print("maps is    " + IncidentType.toString());
 //    print('We sent the verification link to ${userMap.throughput}.');
   }
 
 
   Future<void> onSubmit() async {
     // _imageFiles.clear();
-//    if(_imageFiles.length==null||_imageFiles.length==0){
-//      Utils().showSnackBar(buildTranslate(context, 'NoImages'));
-//    }else
+    if(_imageFiles.length==null||_imageFiles.length==0){
+      Utils().showSnackBar(buildTranslate(context, 'NoImages'));
+    }else
     if(Utils().checkNull(StreetController.text)){
       Utils().showSnackBar(buildTranslate(context, 'NoLocation'));
     }else if(Utils().checkNull(IncidentController.text)){
@@ -219,7 +222,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
     }else{
       Navigator
           .push(context,MaterialPageRoute(
-        builder: (context) => ReportIncidentScreen2({"address":newMap,"images":_imageFiles,"item":checkMap,"comment":CommentController.value.toString()}),
+        builder: (context) => ReportIncidentScreen2({"address":userMap,"screen":"AddIncidentReport","images":_imageFiles,"item":{"id":IncidentType.id,"name":IncidentType.name},"comment":CommentController.text,"status":"1"}),
       ), );
     }
 
