@@ -1,11 +1,41 @@
 {
     "app_name": "Stop Violence",
-    "appBar1" : "Report Incidentios",
+
+    "appBar" : "Report Incident",
+    "appBar1" :  "Report Incident 1/2",
+
     "picture_of_the_incident" : "PICTURE OF THE INCIDENT *",
     "address" :"ADDRESS *",
+    "address_hint" : "Address",
+    "map" : "MAP",
+    "incident_type" : "INCIDENT_TYPE *",
+    "incident_type_hint" : "Incident Type",
+    "comment" : "Add COMMENTS",
+    "comment_hint" : "Comments",
+    "submit" : "SUBMIT",
+    "street_hint" : "N8",
+
+    "appBar2" : "Report Incident 2/2",
+    "stay_anonymous" : "STAY ANONYMOUS ",
+    "coordinates" : "COORDINATES ",
+    "name_hint" : "Name * ",
+    "email_hint" : "Email * ",
+    "phone_hint" : "Phone ",
+    "stay_anonymous_warning" : "Thank you ! Your incident has been sent to the competent service. An E-mail containing the incident information has been sent to your address",
+    "loading" : "Loading...",
+
+    "take_a_picture":"Take a Picture",
+    "add_a_picture":"Add a Picture",
+    "choose_a_picture":"Choose a Picture",
+    "cancel":"Cancel",
+    "confirmation":"Confirmation",
+    "confirmation_text":"Thank you ! Your incident has been sent to the competent service. An E-mail containing the incident information has been sent to your address",
+    "ok":"Ok",
+
     "NoImages": "Please upload an image",
     "NoLocation": "Please Add your location",
     "NoComment": "Please Add a comment",
     "NoIncidentType": "Please Select incident Type"
+
 
 }

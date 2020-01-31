@@ -3,6 +3,7 @@ import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
+import 'package:flutter_app/constants/dimens.dart';
 import 'package:flutter_app/localization/app_localizations.dart';
 import 'package:flutter_app/localization/language_constants.dart';
 import 'package:flutter_app/main.dart';
@@ -74,20 +75,30 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 new Container(
                   margin: EdgeInsets.only(top: 20),
-                    child:  MySubmitButton().setButton(context, buildTranslate(context, 'appBar1'),onSubmit),
+                    child:  MySubmitButton().setButton(context, buildTranslate(context, 'appBar'),onSubmit),
                     
                 ),
                 
 
               ],
             ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                MySubmitButton().setButton(context, "En", ToEnglish,),
-                MySubmitButton().setButton(context, "Fr", ToFrench,),
-              ],
-            )
+
+            new Container(
+              margin: EdgeInsets.only(left: 0, top: 100, right: 20, bottom: 0),
+
+                  child: new Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+
+                    children: <Widget>[
+                      MySubmitButton().setButton(context, "En", ToEnglish,),
+                      SizedBox(width: Dimens.horizontal_padding,),
+                      MySubmitButton().setButton(context, "Fr", ToFrench,),
+                    ],
+                  ),
+                ),
+
+
           ],
         ),
     );

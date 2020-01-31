@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Utils/utils.dart';
 import 'package:flutter_app/constants/colors.dart';
-import 'package:flutter_app/constants/strings.dart';
+
 import 'package:flutter_app/constants/dimens.dart' ;
 import 'package:flutter_app/localization/app_localizations.dart';
 import 'package:flutter_app/model/CheckCategory.dart';
@@ -61,7 +61,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar: MyAppBar().setAppBar(context, Strings.appBar1, GoBack),
+        appBar: MyAppBar().setAppBar(context, buildTranslate(context, 'appBar1'), GoBack),
         body: ListView(
 
           children: <Widget>[
@@ -74,7 +74,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
                 children: <Widget>[
                   MyTextTitle().setTextInput(
                       context, CupertinoIcons.photo_camera_solid,
-                      Strings.picture_of_the_incident),
+                      buildTranslate(context, 'picture_of_the_incident')),
                   SizedBox(height: Dimens.vertical_padding,),
                   Container(
                     height: 100,
@@ -123,7 +123,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
                   SizedBox(height: Dimens.vertical_margin,),
                   MyTextTitle().setTextInput(
-                      context, CupertinoIcons.location_solid, Strings.address),
+                      context, CupertinoIcons.location_solid, buildTranslate(context, 'address')),
                   SizedBox(height: Dimens.vertical_padding,),
                   Row(
                     children: <Widget>[
@@ -131,7 +131,7 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
 
                         child: MyTextField().setTextField(
-                            context, AddressController, Strings.address_hint),
+                            context, AddressController, buildTranslate(context, 'address_hint')),
                         flex: 4,
                       ),
                       SizedBox(width: Dimens.vertical_padding_small,),
@@ -140,21 +140,21 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
 
                         child: MyTextField().setTextField(
-                            context, StreetController, Strings.street_hint),
+                            context, StreetController, buildTranslate(context, 'street_hint')),
                         flex: 1,
                       ),
                     ],
                   ),
                   SizedBox(height: Dimens.vertical_padding,),
                   MyTextFieldInActive().setTextField(
-                      context, Strings.address_hint),
+                      context, buildTranslate(context, 'address_hint')),
                   SizedBox(height: Dimens.vertical_padding,),
                   MySubmitButton().setButton(context, 'Map', onMap),
 
 
                   SizedBox(height: Dimens.vertical_margin,),
                   MyTextTitle().setTextInput(context, Icons.assignment_late,
-                      buildTranslate(context, 'appBar1')),
+                      buildTranslate(context, 'incident_type')),
                   SizedBox(height: Dimens.vertical_padding,),
                   GestureDetector(
                     onTap: onType,
@@ -162,19 +162,19 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
 
                       child: MyTextFieldInActiveSimple().setTextField(
                           context, IncidentController,
-                          Strings.incident_type_hint),
+                          buildTranslate(context, 'incident_type_hint')),
                     ),
                   ),
 
 
                   SizedBox(height: Dimens.vertical_margin,),
                   MyTextTitle().setTextInput(
-                      context, Icons.mode_comment, Strings.comment),
+                      context, Icons.mode_comment, buildTranslate(context, 'comment')),
                   SizedBox(height: Dimens.vertical_padding,),
                   MyTextFieldLarge().setTextField(
-                      context, CommentController, Strings.comment_hint),
+                      context, CommentController, buildTranslate(context, 'comment_hint')),
                   SizedBox(height: Dimens.vertical_padding,),
-                  MySubmitButton().setButton(context, 'Submit', onSubmit),
+                  MySubmitButton().setButton(context, buildTranslate(context, 'submit'), onSubmit),
 
                 ],
               ),

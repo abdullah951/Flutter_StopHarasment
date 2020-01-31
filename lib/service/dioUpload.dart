@@ -19,7 +19,7 @@ void showProgress(received, total) {
   }
 }
 
-Future<FormData> FormData1(List<File> file,id,comment) async {
+Future<FormData> FormData1(List<File> file,id,comment,email,name) async {
   print(file.length);
   var files2=[];
   for(int i=0;i<file.length;i++){
@@ -30,6 +30,8 @@ Future<FormData> FormData1(List<File> file,id,comment) async {
   return FormData.fromMap({
     "id":id,
     "comment":comment,
+    "email":email,
+    "name":name,
     "files":files2
 
 //    "files": [
@@ -72,13 +74,13 @@ Future<FormData> FormData3() async {
   });
 }
 
-  Future<String> FileUpload(List<File> file,String id,String comment) async {
+  Future<String> FileUpload(List<File> file,String id,String comment,String email,String name) async {
   main();
   print(file.length);
   response = await dio.post(
     //"/upload",
       Urls.fileupload,
-      data: await FormData1(file,id,comment),
+      data: await FormData1(file,id,comment,email,name),
 
   onSendProgress: (received, total) {
   if (total != -1) {

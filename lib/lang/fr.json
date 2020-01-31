@@ -1,10 +1,43 @@
 {
-    "app_name": "Stop Violence",
-    "appBar1" : "Report Incident blah blah blah 1/2",
-    "picture_of_the_incident" : "PICTURE OF THE fndb fb *",
-    "address" :"ADDRESSion *",
+    "app_name": "Stop Racisme",
+
+    "appBar" : "Signalez un incident",
+    "appBar1" :  "Ajout d\\'un incident 1/2",
+
+    "picture_of_the_incident" : "Ajouter d\\'une image *",
+    "address" :"Adresse *",
+    "address_hint" : "Adresse",
+    "map" : "Map",
+    "incident_type" : "Type d\\'incident *",
+    "incident_type_hint" : "Type d\\'incident",
+    "comment" : "Commentaires",
+    "comment_hint" : "Comments",
+    "submit" : "Envoyez",
+    "street_hint" : "N8",
+
+    "appBar2" : "Ajout d\\'un incident 2/2",
+    "stay_anonymous" : "Restez anonyme ",
+    "coordinates" : "Vos coordonnées ",
+    "name_hint" : "Nom * ",
+    "email_hint" : "Email * ",
+    "phone_hint" : "Mobile ",
+    "stay_anonymous_warning" : "Thank you ! Your incident has been sent to the competent service. An E-mail containing the incident information has been sent to your address",
+    "loading" : "Loading...",
+
+    "take_a_picture":"Prendre une photo",
+    "add_a_picture":"Ajouter une photo",
+    "choose_a_picture":"Choisir une photo",
+    "cancel":"Annuler",
+    "confirmation":"Confirmation",
+    "confirmation_text":"Merci, votre témoignage va être transférer au service compétent. Vous recevrez un email de confirmation prochainement",
+    "ok":"Ok",
+
+
+
     "NoImages": "Veuillez télécharger une image",
     "NoLocation": "Veuillez ajouter votre emplacement",
     "NoComment": "Veuillez ajouter un commentaire",
     "NoIncidentType": "Veuillez sélectionner le type d'incident"
+
+
 }

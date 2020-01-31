@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/strings.dart';
 import 'package:flutter_app/constants/urls.dart';
+import 'package:flutter_app/localization/app_localizations.dart';
 import 'package:flutter_app/model/CheckCategory.dart';
 import 'package:flutter_app/model/GetCategory.dart';
 
@@ -52,7 +53,7 @@ class _IncidentType2ScreenState extends State<IncidentType2Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBarCross().setAppBar(context, Strings.incident_type_hint, goback, cross),
+      appBar: MyAppBarCross().setAppBar(context, buildTranslate(context, 'incident_type_hint'), goback, cross),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         child: MyIncidentTypeList().setMyIncidentTypeList(context, _newsArticles, action),

@@ -6,7 +6,8 @@ import 'package:flutter_app/Utils/utils.dart';
 
 import 'package:flutter_app/constants/colors.dart';
 import 'package:flutter_app/constants/dimens.dart';
-import 'package:flutter_app/constants/strings.dart';
+import 'package:flutter_app/localization/app_localizations.dart';
+
 import 'package:flutter_app/model/CheckCategory.dart';
 import 'package:flutter_app/service/dioUpload.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
@@ -14,6 +15,8 @@ import 'package:flutter_app/widgets/button_submit.dart';
 import 'package:flutter_app/widgets/text_field.dart';
 import 'package:flutter_app/widgets/text_field_inactive.dart';
 import 'package:flutter_app/widgets/text_title.dart';
+
+import '../../routes.dart';
 
 class ReportIncidentScreen2 extends StatefulWidget {
   Map<String, dynamic> maps;
@@ -34,7 +37,10 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
 
   bool _switchValue=false;
   bool _visibilityValue=false;
-  TextEditingController myController=TextEditingController();
+  String id="";
+  TextEditingController NameController=TextEditingController();
+  TextEditingController EmailController=TextEditingController();
+  TextEditingController PhoneController=TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -47,7 +53,7 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
 
     return Scaffold(
         
-        appBar: MyAppBar().setAppBar(context, Strings.appBar2,GoBack),
+        appBar: MyAppBar().setAppBar(context, buildTranslate(context, 'appBar2'),GoBack),
         body: ListView(
 
           children: <Widget>[
@@ -60,7 +66,7 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      MyTextTitle().setTextInput(context, CupertinoIcons.person_solid, Strings.stay_anonymous),
+                      MyTextTitle().setTextInput(context, CupertinoIcons.person_solid, buildTranslate(context, 'stay_anonymous')),
                       CupertinoSwitch(value: _switchValue, onChanged: (bool value) {
                         setState(() {
                           _switchValue = value;
@@ -73,7 +79,7 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
                   ),
                   SizedBox(height: Dimens.vertical_margin,),
                   Visibility(
-                    visible: !_visibilityValue,
+                    visible: !_switchValue,
                     child: Column(
                       children: <Widget>[
 
@@ -86,20 +92,20 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
 
 
 
-                        MyTextTitle().setTextInput(context, CupertinoIcons.person_solid, Strings.coordinates),
+                        MyTextTitle().setTextInput(context, CupertinoIcons.person_solid, buildTranslate(context, 'coordinates')),
                         SizedBox(height: Dimens.vertical_margin,),
 
-                        MyTextField().setTextField(context, myController,Strings.name_hint),
+                        MyTextField().setTextField(context, NameController,buildTranslate(context, 'name_hint')),
                         SizedBox(height: Dimens.vertical_padding,),
-                        MyTextField().setTextField(context, myController,Strings.email_hint),
+                        MyTextField().setTextField(context, EmailController,buildTranslate(context, 'email_hint')),
                         SizedBox(height: Dimens.vertical_padding,),
-                        MyTextField().setTextField(context, myController,Strings.phone_hint),
+                        MyTextField().setTextField(context, PhoneController,buildTranslate(context, 'phone_hint')),
 
                       ],
                     ),
                   ),
                   Visibility(
-                    visible: _visibilityValue,
+                    visible: _switchValue,
                     child: Column(
                       children: <Widget>[
 
@@ -110,10 +116,10 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
 
 
 
-                        MyTextFieldInActive().setTextField(context, Strings.stay_anonymous_warning),
+                        MyTextFieldInActive().setTextField(context, buildTranslate(context, 'stay_anonymous_warning')),
                         SizedBox(height: Dimens.vertical_margin,),
 
-                        MyTextTitle().setTextInput(context, CupertinoIcons.person_solid, Strings.coordinates),
+                        MyTextTitle().setTextInput(context, CupertinoIcons.person_solid, buildTranslate(context, 'coordinates')),
                         SizedBox(height: Dimens.vertical_margin,),
 
                         MyTextFieldInActive().setTextField(context,''),
@@ -130,7 +136,7 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
 
 
 
-                  MySubmitButton().setButton(context, 'Submit',onSubmit),
+                  MySubmitButton().setButton(context, buildTranslate(context, 'submit'),onSubmit),
 
 
 
@@ -145,20 +151,40 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
   }
 
   Future onSubmit() async {
+    print(!_switchValue);
+    List<File> img=await maps['images'];
+    print(img.length);
+    String comment=maps['comment'];
+    maps.remove('images');
+   String name=!_switchValue?NameController.text:"";
+   String email=!_switchValue?EmailController.text:"";
+   String phone=!_switchValue?PhoneController.text:"";
+   String type=!_switchValue?"User":"Anonymous";
+    maps.putIfAbsent('type', () => {"by":type,"name":name,"email":email,"type":"human","number":phone});
+   if(!_switchValue){
+     if(Utils().checkNull(name)){
+       Utils().showSnackBar(buildTranslate(context, 'NoName'));
+     }else  if(Utils().checkNull(email)){
+       Utils().showSnackBar(buildTranslate(context, 'NoEmail'));
+     }else{
+      id= await dioupload().AddIncident(maps);
+     }
+   }
+   else{
+     id= await dioupload().AddIncident(maps);
+   }
 
 
-   maps.putIfAbsent('type', () => {"by":"Anonymous","name":"kashif","email":"kashif.zahid18@gmail.com","type":"human","number":"03350542182"});
-   List<File> img=maps['images'];
-   String comment=maps['comment'];
-   maps.remove('images');
 
 
-     String s = await dioupload().AddIncident(maps);
 
 
-   String d = await dioupload().FileUpload(img,s,comment);
+    // await maps.remove('type');
+
+
+   String d = await dioupload().FileUpload(img,id,comment,email,name);
    print(d);
-   d=="1"?Navigator.of(context).pop(true):Utils().showSnackBar("Incident Not reported");
+   GoBack();
 
   }
   void printed(String maps){
@@ -166,6 +192,6 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
   }
 
   void GoBack() {
-
+    Navigator.popUntil(context, ModalRoute.withName(Routes.home));
   }
 }
