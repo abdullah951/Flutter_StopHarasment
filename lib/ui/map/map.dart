@@ -61,11 +61,11 @@ class _MapScreenState extends State<MapScreen> {
           child: Column(
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   //Text("Loading..."),
                   SimpleTextView().setTextInput(context, text?? Strings.loading),
-                  SizedBox(width: 70),
+//                  SizedBox(width: 0),
                   MySubmitButton().setButton(context, "Ok", click)
                 ],
               ),

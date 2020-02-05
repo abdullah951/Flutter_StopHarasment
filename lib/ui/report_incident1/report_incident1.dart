@@ -13,6 +13,8 @@ import 'package:flutter_app/model/CheckCategory.dart';
 import 'package:flutter_app/model/MapData.dart';
 import 'package:flutter_app/service/dioUpload.dart';
 import 'package:flutter_app/ui/report_incident2/report_incident2.dart';
+import 'package:flutter_app/widgets/DialogTextView.dart';
+import 'package:flutter_app/widgets/SimpleTextView.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/button_submit.dart';
 import 'package:flutter_app/widgets/circular_image_widget.dart';
@@ -50,12 +52,58 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
   var userMap;
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image ;
+    showGeneralDialog(
 
-    setState(() {
-      image != null ? _imageFiles.add(image) : null;
-    });
+        context: context,
+        barrierDismissible: true,
+        barrierLabel: MaterialLocalizations.of(context)
+            .modalBarrierDismissLabel,
+        barrierColor: Colors.black45,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext,
+            Animation animation,
+            Animation secondaryAnimation) {
+          return Center(
+            child: Container(
+
+             
+              height: 200,
+              margin: EdgeInsets.all(40),
+              padding: EdgeInsets.all(20),
+
+              color: Colors.white,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+
+                    DialogTextView().setTextInput(context, "Gallery",getImageFromCam,"gal"),
+                    DialogTextView().setTextInput(context, "Camera",getImageFromCam,"cam"),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
   }
+    Future getImageFromCam(String s) async {
+      var image;
+      if(s=="gal"){
+        image=await ImagePicker.pickImage(source: ImageSource.gallery);
+
+      }else if(s=="cam"){
+        image=await ImagePicker.pickImage(source: ImageSource.camera);
+      }
+     Navigator.of(context).pop();
+      setState(() {
+        image != null ? _imageFiles.add(image) : null;
+      });
+    }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -220,10 +268,11 @@ class _ReportIncidentScreen1State extends State<ReportIncidentScreen1> {
     }else if(Utils().checkNull(CommentController.text)){
       Utils().showSnackBar(buildTranslate(context, 'NoComment'));
     }else{
-      Navigator
+     var resul=await Navigator
           .push(context,MaterialPageRoute(
         builder: (context) => ReportIncidentScreen2({"address":userMap,"screen":"AddIncidentReport","images":_imageFiles,"item":{"id":IncidentType.id,"name":IncidentType.name},"comment":CommentController.text,"status":"1"}),
       ), );
+     Navigator.pop(context);
     }
 
 

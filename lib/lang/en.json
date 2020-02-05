@@ -21,7 +21,7 @@
     "name_hint" : "Name * ",
     "email_hint" : "Email * ",
     "phone_hint" : "Phone ",
-    "stay_anonymous_warning" : "Thank you ! Your incident has been sent to the competent service. An E-mail containing the incident information has been sent to your address",
+    "stay_anonymous_warning" : "You are Anonymous .",
     "loading" : "Loading...",
 
     "take_a_picture":"Take a Picture",
@@ -31,6 +31,7 @@
     "confirmation":"Confirmation",
     "confirmation_text":"Thank you ! Your incident has been sent to the competent service. An E-mail containing the incident information has been sent to your address",
     "ok":"Ok",
+    "Register_Complaint": "Your Complaint is been Registered .....",
 
     "NoImages": "Please upload an image",
     "NoLocation": "Please Add your location",

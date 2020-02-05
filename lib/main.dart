@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/routes.dart';
 import 'package:flutter_app/ui/home/home.dart';
 import 'package:flutter_app/ui/splash/splash.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -67,31 +68,33 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: Strings.appName,
-      theme: themeData,
-      routes: Routes.routes,
-      supportedLocales: [
-        Locale('en', 'US'),
-        Locale('fr', 'FR'),
-      ],
-      locale: _locale,
-      localizationsDelegates: [
-        AppLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
+    return FlutterEasyLoading(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: Strings.appName,
+        theme: themeData,
+        routes: Routes.routes,
+        supportedLocales: [
+          Locale('en', 'US'),
+          Locale('fr', 'FR'),
+        ],
+        locale: _locale,
+        localizationsDelegates: [
+          AppLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale.languageCode &&
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
           }
-        }
-        return supportedLocales.first;
-      },
-      home: HomeScreen(),
+          return supportedLocales.first;
+        },
+        home: HomeScreen(),
+      ),
     );
   }
 

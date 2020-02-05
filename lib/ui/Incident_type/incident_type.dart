@@ -13,6 +13,7 @@ import 'package:flutter_app/ui/Incident_type/incident_type2.dart';
 import 'package:flutter_app/widgets/app_bar.dart';
 import 'package:flutter_app/widgets/app_bar_cross.dart';
 import 'package:flutter_app/widgets/incident_type_list.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class IncidentTypeScreen extends StatefulWidget {
   @override
@@ -56,12 +57,17 @@ class _IncidentTypeScreenState extends State<IncidentTypeScreen> {
     Navigator.popUntil(context, ModalRoute.withName(Routes.report_incident1));
   }
   void _populateNewsArticles() {
+
     String url=Urls.GetCategory+"?"+GetParameters.Screen+"="+Screens.GetCategoryScreen+"&"+GetParameters.Id+"=0";
     print(url);
 
+
     Webservice().load(GetCategory.all(url)).then((newsArticles) => {
+
       setState(() => {
+
         _newsArticles = newsArticles
+
       })
     });
 

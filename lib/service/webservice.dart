@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'dart:io';
@@ -21,6 +22,7 @@ class Webservice {
     final response = await http.get(resource.url);
     print(resource.url);
     if(response.statusCode == 200) {
+
       return resource.parse(response);
     } else {
       throw Exception('Failed to load data!');

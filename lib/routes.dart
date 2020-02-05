@@ -25,6 +25,7 @@ class Routes {
     home: (BuildContext context) => HomeScreen(),
     map: (BuildContext context) => MapScreen(),
     report_incident1: (BuildContext context) => ReportIncidentScreen1(),
+    home:(BuildContext context)=> HomeScreen(),
 
     incident_type: (BuildContext context) => IncidentTypeScreen(),
 

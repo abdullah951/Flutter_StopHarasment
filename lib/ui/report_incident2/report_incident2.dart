@@ -15,6 +15,9 @@ import 'package:flutter_app/widgets/button_submit.dart';
 import 'package:flutter_app/widgets/text_field.dart';
 import 'package:flutter_app/widgets/text_field_inactive.dart';
 import 'package:flutter_app/widgets/text_title.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
 
 import '../../routes.dart';
 
@@ -167,6 +170,7 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
      }else  if(Utils().checkNull(email)){
        Utils().showSnackBar(buildTranslate(context, 'NoEmail'));
      }else{
+       EasyLoading.show(status: buildTranslate(context, 'Register_Complaint'));
       id= await dioupload().AddIncident(maps);
      }
    }
@@ -192,6 +196,9 @@ class _ReportIncidentScreen2State extends State<ReportIncidentScreen2> {
   }
 
   void GoBack() {
-    Navigator.popUntil(context, ModalRoute.withName(Routes.home));
+    EasyLoading.dismiss();
+    Navigator.pop(context,"yes");
+ // Navigator.popUntil(context, ModalRoute.withName(Routes.home));
+   // Navigator.popUntil(context, ModalRoute.withName(Routes.report_incident1));
   }
 }
